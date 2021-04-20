@@ -1,25 +1,34 @@
 import React, { Component, useState } from 'react';
 import axios from 'axios';
+import Select from 'react-select';
+
+const options = [
+    { label: "Derive", value: "derive" },
+    { label: "Simplify", value: "simplify" },
+  ];
 
 class Newton extends Component {
     constructor(props) {
         super(props);
         this.state = {
             apiData: [],
-            cityName: "",
+            problem: "",
+            function: "",
             found: false
         }
     }
 
+    
     handleInputChange = (event) => {
-        this.setState({ cityName: event.target.value.toUpperCase()}
+        this.setState({ problem: event.target.value}
         );
     }
 
     handleSearchClick = async () => {
-        let cityNameQuery = this.state.cityName;
-        let linkToAPI = 'http://ctp-zip-api.herokuapp.com/city/' + cityNameQuery;
-
+        let problemQuery = this.state.problem;
+        console.log(problemQuery)
+        let linkToAPI = 'https://newton.now.sh/api/v2/' + options.value + '/' + problemQuery;
+        console.log(linkToAPI)
         try {
             let response = await axios.get(linkToAPI);
             this.setState({ apiData: response.data, found: true });
@@ -39,22 +48,27 @@ class Newton extends Component {
     }
 
     makeTable = () => {
-        let currData = this.state.apiData;
+        const currData = this.state.apiData;
         let foundMatch = this.state.found;
         let table = [];
+        console.log(currData.result)
         //found is false when we get 404 error
         if (!foundMatch) {
             table.push(<tr key={-1}><td>No Results</td></tr>);
             return table;
         } else {
-            for (let i = 0; i < currData.length; i++) {
-                let zip = currData[i];
+            //for (let i = 0; i < currData.length; i++) {
+                // let expression = currData[i].expression;
+                // let operation = currData[i].operation;
+                let result = currData.result
                 table.push(
-                    <tr key={currData[i].id}>
-                        <td>Zip: {zip}</td>
+                    <tr key={currData.id}>
+                        {/* <td>Expression: {expression}</td>
+                        <td>Operation: {operation}</td> */}
+                        <td>Result: {result}</td>
                     </tr>
                 );
-            }
+            //}
             return table;
         }
     }
@@ -62,10 +76,11 @@ class Newton extends Component {
     render() {
         return (
             <div className="container">
-                <div className="search">
-                    <h3>City Name Search</h3>
-                    <input type="text" value={this.state.cityName} onChange={this.handleInputChange} placeholder="Try SPRINGFIELD" />
-                    <button className="search-button" onClick={this.handleSearchClick}>Search</button>
+                <div className="calculate">
+                    <h3>Newton API</h3>
+                    <Select options={options} />
+                    <input type="text" value={this.state.problem} onChange={this.handleInputChange} placeholder="Try x^2" />
+                    <button className="calculate-button" onClick={this.handleSearchClick}>Calculate</button>
                 </div>
                 <br />
                 <div className="table">

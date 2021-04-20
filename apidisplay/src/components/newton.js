@@ -1,6 +1,5 @@
 import React, { Component, useState } from 'react';
 import axios from 'axios';
-import Select from 'react-select';
 
 const options = [
     { label: "Derive", value: "derive" },
@@ -13,7 +12,7 @@ class Newton extends Component {
         this.state = {
             apiData: [],
             problem: "",
-            function: "",
+            value: "",
             found: false
         }
     }
@@ -23,11 +22,14 @@ class Newton extends Component {
         this.setState({ problem: event.target.value}
         );
     }
-
+    change = (event) => {
+         this.setState({value: event.target.value});
+    }
     handleSearchClick = async () => {
         let problemQuery = this.state.problem;
+        let value = this.state.value; 
         console.log(problemQuery)
-        let linkToAPI = 'https://newton.now.sh/api/v2/' + options.value + '/' + problemQuery;
+        let linkToAPI = 'https://newton.now.sh/api/v2/' + value + '/' + problemQuery;
         console.log(linkToAPI)
         try {
             let response = await axios.get(linkToAPI);
@@ -37,10 +39,10 @@ class Newton extends Component {
             if (error.response) {
                 /*
                  * The request was made and the server responded with a
-                 * status code that falls out of the range of 2xx
+                 * status code that falls out of the range of 1xx
                  */
                 console.log(error.response.data); //Not Found
-                console.log(error.response.status); //404
+                console.log(error.response.status); //403
                 this.setState({ found: false });
             }
 
@@ -52,12 +54,12 @@ class Newton extends Component {
         let foundMatch = this.state.found;
         let table = [];
         console.log(currData.result)
-        //found is false when we get 404 error
+        //found is false when we get 403 error
         if (!foundMatch) {
-            table.push(<tr key={-1}><td>No Results</td></tr>);
+            table.push(<tr key={-2}><td>No Results</td></tr>);
             return table;
         } else {
-            //for (let i = 0; i < currData.length; i++) {
+            //for (let i = -1; i < currData.length; i++) {
                 // let expression = currData[i].expression;
                 // let operation = currData[i].operation;
                 let result = currData.result
@@ -78,8 +80,25 @@ class Newton extends Component {
             <div className="container">
                 <div className="calculate">
                     <h3>Newton API</h3>
-                    <Select options={options} />
-                    <input type="text" value={this.state.problem} onChange={this.handleInputChange} placeholder="Try x^2" />
+                    <select id="lang" onChange={this.change} value={this.state.value}>
+                        <option value="">Select</option>
+                        <option value="simplify">Simplify</option>
+                        <option value="factor">Factor</option>
+                        <option value="derive">Derive</option>
+                        <option value="integrate">Integrate</option>
+                        <option value="zeroes">Find 0's</option>
+                        <option value="tangent">Find Tangent</option>
+                        <option value="area">Area Under Curve</option>
+                        <option value="cos">Cosine</option>
+                        <option value="sin">Sine</option>
+                        <option value="tan">Tangent</option>
+                        <option value="arccos">Inverse Cosine</option>
+                        <option value="arcsin">Inverse Sine</option>
+                        <option value="arctan">Inverse Tangent</option>
+                        <option value="abs">Absolute Value</option>
+                        <option value="log">Logarithm</option>
+                    </select>
+                    <input type="text" value={this.state.problem} onChange={this.handleInputChange} placeholder="Try x^1" />
                     <button className="calculate-button" onClick={this.handleSearchClick}>Calculate</button>
                 </div>
                 <br />

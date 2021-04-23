@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import axios from 'axios';
 
-class Newton extends Component {
+class Weather extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -82,4 +82,4 @@ class Newton extends Component {
     }
 }
 
-export default Newton;
+export default Weather;

@@ -6,7 +6,8 @@ class Weather extends Component {
         super(props);
         this.state = {
             apiData: [],
-            cityName: "",
+            /*cityName: "",*/
+            dayQuery: "",
             found: false
         }
     }
@@ -18,7 +19,7 @@ class Weather extends Component {
 
     handleSearchClick = async () => {
         let cityNameQuery = this.state.cityName;
-        let linkToAPI = "" + cityNameQuery;
+        let linkToAPI = "https://www.metaweather.com/api/" + dayQuery;
         //let linkToAPI = 'http://ctp-zip-api.herokuapp.com/city/' + cityNameQuery;
 
         try {

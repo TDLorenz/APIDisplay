@@ -25,7 +25,7 @@ class Weather extends Component {
 
     handleSearchClick = async () => {
         let cityNameQuery = this.state.cityName;
-        let linkToAPI = "https://www.metaweather.com/api/" + cityNameQuery;
+        let linkToAPI = "https://www.metaweather.com/api/location/search/?query=" + cityNameQuery;
         //let linkToAPI = 'http://ctp-zip-api.herokuapp.com/city/' + cityNameQuery;
 
         try {
@@ -59,6 +59,9 @@ class Weather extends Component {
                 let zip = currData[i];
                 table.push(
                     <tr key={currData[i].id}>
+                        <td>{this.state.cityName}</td>
+                        <td>Location: {latt_long}</td>
+
                         <td>Zip: {zip}</td>
                         <td>Weather: {weather} </td>
                         <td>Temperature: {temp} </td>
@@ -87,14 +90,10 @@ class Weather extends Component {
                             <option value="Miami">Miami</option>
                         </select>
                     </label>
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Search" onClick={this.handleSearchClick} />
                 </form>
 
-                <div className="search">
-                    <h3>City Name Search</h3>
-                    <input type="text" value={this.state.cityName} onChange={this.handleInputChange} placeholder="Try SPRINGFIELD" />
-                    <button className="search-button" onClick={this.handleSearchClick}>Search</button>
-                </div>
+
                 <br />
                 <div className="table">
                     <table id="data">
@@ -109,3 +108,11 @@ class Weather extends Component {
 }
 
 export default Weather;
+
+/*
+                <div className="search">
+                    <h3>City Name Search</h3>
+                    <input type="text" value={this.state.cityName} onChange={this.handleInputChange} placeholder="Try SPRINGFIELD" />
+                    <button className="search-button" onClick={this.handleSearchClick}>Search</button>
+                </div>
+*/

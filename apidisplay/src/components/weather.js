@@ -6,11 +6,13 @@ class Weather extends Component {
         super(props);
         this.state = {
             apiData: [],
-            /*cityName: "",*/
-            dayQuery: "",
+            cityName: "",
+            /*dayQuery: "",*/
+            zipcode: 00000, // should it be a string or int or smthing else?
             found: false
         }
     }
+
 
     handleInputChange = (event) => {
         this.setState({ cityName: event.target.value.toUpperCase() }
@@ -19,7 +21,7 @@ class Weather extends Component {
 
     handleSearchClick = async () => {
         let cityNameQuery = this.state.cityName;
-        let linkToAPI = "https://www.metaweather.com/api/" + dayQuery;
+        let linkToAPI = "https://www.metaweather.com/api/" + cityNameQuery;
         //let linkToAPI = 'http://ctp-zip-api.herokuapp.com/city/' + cityNameQuery;
 
         try {
@@ -54,7 +56,8 @@ class Weather extends Component {
                 table.push(
                     <tr key={currData[i].id}>
                         <td>Zip: {zip}</td>
-                        <tf>Weather: {weather} </tf>
+                        <td>Weather: {weather} </td>
+                        <td>Temperature: {temp} </td>
                     </tr>
                 );
             }
@@ -65,6 +68,24 @@ class Weather extends Component {
     render() {
         return (
             <div className="container">
+                <h>Today's Weather</h>
+                <br />
+                <h2>Choose which city's weather to view</h2>
+                <br />
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Choose a city
+                        <select value={this.state.cityName} onChange={this.handleChange}>
+                            <option value="New York">New York</option>
+                            <option value="Chicago">Chicago</option>
+                            <option value="Los Angeles">Los Angeles</option>
+                            <option value="San Francisco">San Francisco</option>
+                            <option value="Miami">Miami</option>
+                        </select>
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+
                 <div className="search">
                     <h3>City Name Search</h3>
                     <input type="text" value={this.state.cityName} onChange={this.handleInputChange} placeholder="Try SPRINGFIELD" />

@@ -13,6 +13,10 @@ class Weather extends Component {
         }
     }
 
+    handleChange = (event) => {
+        this.setState({ cityName: event.target.value });
+    }
+
 
     handleInputChange = (event) => {
         this.setState({ cityName: event.target.value.toUpperCase() }

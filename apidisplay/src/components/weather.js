@@ -9,24 +9,20 @@ class Weather extends Component {
         super(props);
         this.state = {
             apiData: [],
-            location: 0, // woeid value integer
+            location: 0, // woeid value is integer
             found: false
         }
     }
 
     handleChange = (event) => {
-        this.setState({ cityName: event.target.value });
-    }
-
-
-    handleInputChange = (event) => {
-        this.setState({ cityName: event.target.value.toUpperCase() }
-        );
+        let loc = event.target.value;
+        let woeid = parseInt(loc);
+        this.setState({ location: woeid/*event.target.value*/ });
     }
 
     handleSearchClick = async () => {
         let locationQuery = this.state.location;
-        let linkToAPI = "https://www.metaweather.com/api/location/" + locationQuery;
+        let linkToAPI = "https://www.metaweather.com/api/location/" + locationQuery + "/";
         // have to use woeid values to get locations
 
         try {
@@ -55,12 +51,14 @@ class Weather extends Component {
         if (!foundMatch) {
             table.push(<tr key={-1}><td>No Results</td></tr>);
             return table;
-        } else {
-            let result = currData.result;
+        }
+        else {
+            //let result = currData.result;
+            let result = currData.value[0];
             table.push(
                 <tr key={currData.id}>
 
-                    <td>{result}</td>
+                    <td>Result: {result}</td>
 
                 </tr>
             );
@@ -70,25 +68,23 @@ class Weather extends Component {
 
     render() {
         return (
-            <div className="container">
-                <h>Today's Weather</h>
+            <div>
+                <h1>Today's Weather</h1>
                 <br />
                 <h2>Choose which city's weather to view</h2>
                 <br />
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Choose a city
-                        <select value={this.state.cityName} onChange={this.handleChange}>
-                            <option value="2459115">New York</option>
-                            <option value="2487956">San Francisco</option>
-                            <option value="2442046">Los Angeles</option>
-                            <option value="2379574">Chicago</option>
-                            <option value="24050077">Miami</option>
-                        </select>
-                    </label>
-                    <input type="submit" value="Search" onClick={this.handleSearchClick} />
-                </form>
 
+                <section className="weather-container">
+                    <select id="lang" onChange={this.handleChange} value={this.state.location}>
+                        <option value="2459115">New York</option>
+                        <option value="2487956">San Francisco</option>
+                        <option value="2442046">Los Angeles</option>
+                        <option value="2379574">Chicago</option>
+                        <option value="24050077">Miami</option>
+                    </select>
+                    &ensp; &ensp;
+                    <button type="search-button" onClick={this.handleSearchClick}>Search</button>
+                </section>
 
                 <br />
                 <div className="table">
@@ -98,7 +94,8 @@ class Weather extends Component {
                         </tbody>
                     </table>
                 </div>
-            </div>
+
+            </div >
         )
     }
 }
@@ -106,19 +103,22 @@ class Weather extends Component {
 export default Weather;
 
 /*
-                <div className="search">
-                    <h3>City Name Search</h3>
-                    <input type="text" value={this.state.cityName} onChange={this.handleInputChange} placeholder="Try SPRINGFIELD" />
-                    <button className="search-button" onClick={this.handleSearchClick}>Search</button>
-                </div>
-*/
+value={this.state.location}
+
+
+        <div className="search">
+            <h3>City Name Search</h3>
+            <input type="text" value={this.state.cityName} onChange={this.handleInputChange} placeholder="Try SPRINGFIELD" />
+            <button className="search-button" onClick={this.handleSearchClick}>Search</button>
+        </div>
+        */
 
 /*
-    <td>Location: {latt_long}</td>
-                        <td>Weather: {weather} </td>
-                        <td>Temperature: {temp} </td>
+<td>Location: {latt_long}</td>
+<td>Weather: {weather} </td>
+<td>Temperature: {temp} </td>
 
-                        <td>Zip: {zip}</td>
-                        <td>Weather: {weather} </td>
-                        <td>Temperature: {temp} </td>
+<td>Zip: {zip}</td>
+<td>Weather: {weather} </td>
+<td>Temperature: {temp} </td>
 */

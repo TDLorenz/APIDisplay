@@ -2,9 +2,9 @@ import React, { Component, useState } from 'react';
 import './App.css';
 import Number from './components/val';
 import Newton from './components/newton';
-import Weather from './components/troy';
+import Weather from './components/weather';
 import Saj from './components/saj';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import NavBar from "./components/NavBar"
 import 'bootstrap/dist/css/bootstrap.min.css';
 

@@ -9,9 +9,7 @@ class Weather extends Component {
         super(props);
         this.state = {
             apiData: [],
-            cityName: "",
-            /*dayQuery: "",*/
-            zipcode: 00000, // should it be a string or int or smthing else?
+            location: 0, // woeid value integer
             found: false
         }
     }
@@ -27,9 +25,9 @@ class Weather extends Component {
     }
 
     handleSearchClick = async () => {
-        let cityNameQuery = this.state.cityName;
-        let linkToAPI = "https://www.metaweather.com/api/location/search/?query=" + cityNameQuery;
-        //let linkToAPI = 'http://ctp-zip-api.herokuapp.com/city/' + cityNameQuery;
+        let locationQuery = this.state.location;
+        let linkToAPI = "https://www.metaweather.com/api/location/" + locationQuery;
+        // have to use woeid values to get locations
 
         try {
             let response = await axios.get(linkToAPI);
@@ -58,23 +56,16 @@ class Weather extends Component {
             table.push(<tr key={-1}><td>No Results</td></tr>);
             return table;
         } else {
-            for (let i = 0; i < currData.length; i++) {
-                let zip = currData[i];
-                table.push(
-                    <tr key={currData[i].id}>
-                        <td>{this.state.cityName}</td>
-                        <td>Location: {latt_long}</td>
-                        <td>Weather: {weather} </td>
-                        <td>Temperature: {temp} </td>
+            let result = currData.result;
+            table.push(
+                <tr key={currData.id}>
 
-                        <td>Zip: {zip}</td>
-                        <td>Weather: {weather} </td>
-                        <td>Temperature: {temp} </td>
-                    </tr>
-                );
-            }
-            return table;
+                    <td>{result}</td>
+
+                </tr>
+            );
         }
+        return table;
     }
 
     render() {
@@ -88,11 +79,11 @@ class Weather extends Component {
                     <label>
                         Choose a city
                         <select value={this.state.cityName} onChange={this.handleChange}>
-                            <option value="New York">New York</option>
-                            <option value="Chicago">Chicago</option>
-                            <option value="Los Angeles">Los Angeles</option>
-                            <option value="San Francisco">San Francisco</option>
-                            <option value="Miami">Miami</option>
+                            <option value="2459115">New York</option>
+                            <option value="2487956">San Francisco</option>
+                            <option value="2442046">Los Angeles</option>
+                            <option value="2379574">Chicago</option>
+                            <option value="24050077">Miami</option>
                         </select>
                     </label>
                     <input type="submit" value="Search" onClick={this.handleSearchClick} />
@@ -120,4 +111,14 @@ export default Weather;
                     <input type="text" value={this.state.cityName} onChange={this.handleInputChange} placeholder="Try SPRINGFIELD" />
                     <button className="search-button" onClick={this.handleSearchClick}>Search</button>
                 </div>
+*/
+
+/*
+    <td>Location: {latt_long}</td>
+                        <td>Weather: {weather} </td>
+                        <td>Temperature: {temp} </td>
+
+                        <td>Zip: {zip}</td>
+                        <td>Weather: {weather} </td>
+                        <td>Temperature: {temp} </td>
 */

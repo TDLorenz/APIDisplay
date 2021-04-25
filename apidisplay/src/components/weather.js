@@ -9,7 +9,7 @@ class Weather extends Component {
         super(props);
         this.state = {
             apiData: [],
-            location: 0, // woeid value is integer
+            location: 0, // location is an woeid value which is an integer
             found: false
         }
     }
@@ -75,6 +75,7 @@ class Weather extends Component {
                 <br />
 
                 <section className="weather-container">
+                    &ensp; &ensp; &ensp; &ensp;
                     <select id="lang" onChange={this.handleChange} value={this.state.location}>
                         <option value="2459115">New York</option>
                         <option value="2487956">San Francisco</option>
@@ -84,16 +85,20 @@ class Weather extends Component {
                     </select>
                     &ensp; &ensp;
                     <button type="search-button" onClick={this.handleSearchClick}>Search</button>
-                </section>
 
-                <br />
-                <div className="table">
-                    <table id="data">
-                        <tbody>
-                            {this.makeTable()}
-                        </tbody>
-                    </table>
-                </div>
+
+                    <br />
+                    <br />
+
+                    <div className="table">
+
+                        <table id="data">
+                            <tbody>
+                                {this.makeTable()}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
 
             </div >
         )

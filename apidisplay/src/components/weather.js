@@ -1,5 +1,8 @@
 import React, { Component, useState } from 'react';
 import axios from 'axios';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../App.css';
 
 class Weather extends Component {
     constructor(props) {
@@ -61,6 +64,8 @@ class Weather extends Component {
                     <tr key={currData[i].id}>
                         <td>{this.state.cityName}</td>
                         <td>Location: {latt_long}</td>
+                        <td>Weather: {weather} </td>
+                        <td>Temperature: {temp} </td>
 
                         <td>Zip: {zip}</td>
                         <td>Weather: {weather} </td>

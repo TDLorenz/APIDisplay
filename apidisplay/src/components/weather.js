@@ -17,7 +17,7 @@ class Weather extends Component {
     handleChange = (event) => {
         let loc = event.target.value;
         let woeid = parseInt(loc);
-        this.setState({ location: woeid/*event.target.value*/ });
+        this.setState({ location: woeid });
     }
 
     handleSearchClick = async () => {
@@ -54,11 +54,11 @@ class Weather extends Component {
         }
         else {
             //let result = currData.result;
-            let result = currData.value[0];
+            let weather = currData.value[0].consolidated_weather;
             table.push(
                 <tr key={currData.id}>
-
-                    <td>Result: {result}</td>
+                    Result:
+                <td>{weather}</td>
 
                 </tr>
             );

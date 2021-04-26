@@ -58,7 +58,9 @@ class Weather extends Component {
             table.push(
                 <tr key={currData.id}>
                     Result:
-                <td>{weather}</td>
+                    <td>{weather.weather_state_name}</td>
+                    &ensp;
+                    <td>{weather.weather_state_abbr}</td>
 
                 </tr>
             );
